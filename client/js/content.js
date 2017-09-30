@@ -164,8 +164,8 @@ var callback = function() {
     investorEls[i].onmouseover = function() {
       self = this;
       investorName = self.firstChild.innerHTML;
-      $.get('https://31a57977.ngrok.io/api/investors/search', { name: encodeURI(investorName) }, function(res) {
-      // $.get('https://knapi.herokuapp.com/investors/search/', { search: encodeURI(self.innerHTML) }, function(res) {
+      // $.get('https://31a57977.ngrok.io/api/investors/search', { name: encodeURI(investorName) }, function(res) {
+      $.get('https://knapi.herokuapp.com/api/investors/search/', { search: encodeURI(investorName) }, function(res) {
         text.className = "knowyourvc-investor-text";
         popup.className = "knowyourvc-investor-popup";
         popup.style.display = "none";
