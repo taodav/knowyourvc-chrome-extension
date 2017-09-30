@@ -10,6 +10,7 @@
   height: 280px;
   box-shadow: 0px 7px 14px 0px rgba(198, 203, 228, 0.5);
   margin-top: 1.5rem;
+  cursor: pointer;
 }
 
 .knowyourvc-investor-text{
