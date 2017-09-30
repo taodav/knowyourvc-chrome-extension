@@ -153,10 +153,12 @@ var callback = function() {
   var investorEls = document.getElementsByClassName('knowyourvc-investor-wrapper');
   var wrapper = document.createElement('div');
   var popup = document.createElement('div');
+  var title = document.createElement('h2');
+  title.className = 'knowyourvc-investor-title';
+  title.innerHTML = 'Review from Know Your VC';
   var text = document.createElement('p');
   var investorName;
   var investorId;
-  console.log(investorEls)
   for (var i=0, max=investorEls.length; i < max; i++) {
     // Do something with the element here
     investorEls[i].onmouseover = function() {
@@ -164,16 +166,16 @@ var callback = function() {
       investorName = self.firstChild.innerHTML;
       $.get('https://31a57977.ngrok.io/api/investors/search', { name: encodeURI(investorName) }, function(res) {
       // $.get('https://knapi.herokuapp.com/investors/search/', { search: encodeURI(self.innerHTML) }, function(res) {
-        text.innerHTML = "HELLO";
         text.className = "knowyourvc-investor-text";
         popup.className = "knowyourvc-investor-popup";
-        popup.style.position = "absolute";
         popup.style.display = "none";
-        popup.style.zIndex = '1';
 
         if (res.review) {
-          text.innerHTML = res.review.comment;
+          text.innerHTML = res.review.comment + '\n';
+        } else {
+          text.innerHTML = 'No reviews - click here to be the first to review!'
         }
+        popup.append(title);
         popup.appendChild(text);
         // insertAfter(popup, self);
         investorId = res.investorId;

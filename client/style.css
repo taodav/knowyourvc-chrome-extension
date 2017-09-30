@@ -8,10 +8,24 @@
   text-overflow: hidden;
   width: 30%;
   height: 280px;
+  box-shadow: 0px 7px 14px 0px rgba(198, 203, 228, 0.5);
+  margin-top: 1.5rem;
 }
 
 .knowyourvc-investor-text{
   color: black;
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
+}
+
+.knowyourvc-investor-title{
+  color: black;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.knowyourvc-investor-wrapper{
+  text-transform: none;
 }
