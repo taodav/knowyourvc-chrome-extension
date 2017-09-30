@@ -176,7 +176,6 @@ var callback = function() {
         }
         popup.appendChild(text);
         // insertAfter(popup, self);
-        console.log(popup)
         investorId = res.investorId;
         self.append(popup);
         popup.onclick = function() {
@@ -188,9 +187,10 @@ var callback = function() {
     
       }
     )}
-    self.onmouseout = function() {
+    investorEls[i].onmouseout = function() {
       popup.style.display = "none";
     }
+    console.log(investorEls[i].lastChild)
   }
 };
 
