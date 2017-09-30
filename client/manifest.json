@@ -14,7 +14,10 @@
     "matches": [
       "<all_urls>"
     ],
+    "css": ["style.css"],
     "js": [
+      "js/libraries/jquery/jquery.min.js",
+      "js/libraries/algolia/algolia.min.js",
       "js/libraries/compromise/compromise.min.js",
       "js/content.js"
     ]

@@ -1,0 +1,17 @@
+.knowyourvc-investor-popup {
+  position: absolute;
+  z-index: 1;
+  background:white;
+  padding: 1rem;
+  box-sizing: border-box;  
+  overflow: hidden;
+  text-overflow: hidden;
+  width: 30%;
+  height: 280px;
+}
+
+.knowyourvc-investor-text{
+  color: black;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+}

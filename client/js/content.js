@@ -74,9 +74,8 @@ function Hilitor(id, tag)
     var doc;
 
     if(node === undefined || !node) return;
-    if(!matchRegex) return;
     if(skipTags.test(node.nodeName)) return;
-
+    
     if(node.hasChildNodes()) {
       for(var i=0; i < node.childNodes.length; i++)
         this.hiliteWords(node.childNodes[i]);
@@ -91,21 +90,26 @@ function Hilitor(id, tag)
             var firstName = entity.firstName.charAt(0).toUpperCase() + entity.firstName.slice(1);
             var lastName = entity.lastName.charAt(0).toUpperCase() + entity.lastName.slice(1);
             self.setRegex(firstName + ' ' + lastName);
+            if(!matchRegex) return;
 
             if((nv = node.nodeValue) && (regs = matchRegex.exec(nv))) {
               if(!wordColor[regs[0].toLowerCase()]) {
                 wordColor[regs[0].toLowerCase()] = colors[colorIdx++ % colors.length];
               }
-      
+              var matchWrapper = document.createElement('div')
+              matchWrapper.style.display = 'inline-block';
+              matchWrapper.className = 'knowyourvc-investor-wrapper'
               var match = document.createElement(hiliteTag);
               match.appendChild(document.createTextNode(regs[0]));
+              match.className = "knowyourvc-investor"
               match.style.backgroundColor = wordColor[regs[0].toLowerCase()];
               match.style.fontStyle = "inherit";
               match.style.color = "#000";
+              matchWrapper.appendChild(match)
       
               var after = node.splitText(regs.index);
               after.nodeValue = after.nodeValue.substring(regs[0].length);
-              node.parentNode.insertBefore(match, after);
+              node.parentNode.insertBefore(matchWrapper, after);
             }
           }
         })
@@ -126,23 +130,68 @@ function Hilitor(id, tag)
   };
 
   // start highlighting at target node
-  this.apply = function(input)
+  this.apply = function()
   {
     this.remove();
-    if(input === undefined || !input) return;
-    if(this.setRegex(input)) {
-      this.hiliteWords(targetNode);
-    }
+    this.hiliteWords(targetNode);
   };
 
 }
 
 var myHilitor;
 
+var insertAfter = function(newNode, referenceNode) {
+  referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+};
+
+
 var callback = function() {
   // Handler when the DOM is fully loaded
   myHilitor = new Hilitor();
-  myHilitor.apply('Lewis Hamilton');
+  myHilitor.apply();
+
+  var investorEls = document.getElementsByClassName('knowyourvc-investor-wrapper');
+  var wrapper = document.createElement('div');
+  var popup = document.createElement('div');
+  var text = document.createElement('p');
+  var investorName;
+  var investorId;
+  console.log(investorEls)
+  for (var i=0, max=investorEls.length; i < max; i++) {
+    // Do something with the element here
+    investorEls[i].onmouseover = function() {
+      self = this;
+      investorName = self.firstChild.innerHTML;
+      $.get('https://31a57977.ngrok.io/api/investors/search', { name: encodeURI(investorName) }, function(res) {
+      // $.get('https://knapi.herokuapp.com/investors/search/', { search: encodeURI(self.innerHTML) }, function(res) {
+        text.innerHTML = "HELLO";
+        text.className = "knowyourvc-investor-text";
+        popup.className = "knowyourvc-investor-popup";
+        popup.style.position = "absolute";
+        popup.style.display = "none";
+        popup.style.zIndex = '1';
+
+        if (res.review) {
+          text.innerHTML = res.review.comment;
+        }
+        popup.appendChild(text);
+        // insertAfter(popup, self);
+        console.log(popup)
+        investorId = res.investorId;
+        self.append(popup);
+        popup.onclick = function() {
+          if (res.investorId) {
+            window.open("http://knowyourvc.com/investors/" + res.investorId);
+          }
+        }
+        popup.style.display = "inherit"
+    
+      }
+    )}
+    self.onmouseout = function() {
+      popup.style.display = "none";
+    }
+  }
 };
 
 if (
