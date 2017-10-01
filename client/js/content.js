@@ -85,6 +85,7 @@ function Hilitor(id, tag)
       var data = doc.topics().data();
       if (data.length > 0) {
         var self = this;
+        console.log(data)
         data.map(function(entity) {
           if (entity.hasOwnProperty('firstName')) {
             var firstName = entity.firstName.charAt(0).toUpperCase() + entity.firstName.slice(1);
@@ -111,8 +112,8 @@ function Hilitor(id, tag)
               var investorId;
               
               //GET request here
-              $.get('https://31a57977.ngrok.io/api/investors/search', { name: firstName + ' ' + lastName }, function(res) {
-                // $.get('https://knapi.herokuapp.com/api/investors/search/', { name: firstName + ' ' + lastName }, function(res) {
+              // $.get('https://31a57977.ngrok.io/api/investors/search', { name: firstName + ' ' + lastName }, function(res) {
+                $.get('https://knapi.herokuapp.com/api/investors/search/', { name: firstName + ' ' + lastName }, function(res) {
                   text.className = "knowyourvc-investor-text";
                   popup.className = "knowyourvc-investor-popup";
                   popup.style.display = "none";
