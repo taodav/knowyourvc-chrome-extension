@@ -20,7 +20,8 @@
       "js/libraries/algolia/algolia.min.js",
       "js/libraries/compromise/compromise.min.js",
       "js/content.js"
-    ]
+    ],
+    "run_at": "document_start"
   }],
   "permissions": [
     "<all_urls>",

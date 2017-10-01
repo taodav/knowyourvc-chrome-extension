@@ -91,25 +91,78 @@ function Hilitor(id, tag)
             var lastName = entity.lastName.charAt(0).toUpperCase() + entity.lastName.slice(1);
             self.setRegex(firstName + ' ' + lastName);
             if(!matchRegex) return;
-
+            var regs;
             if((nv = node.nodeValue) && (regs = matchRegex.exec(nv))) {
               if(!wordColor[regs[0].toLowerCase()]) {
                 wordColor[regs[0].toLowerCase()] = colors[colorIdx++ % colors.length];
               }
-              var matchWrapper = document.createElement('div')
-              matchWrapper.style.display = 'inline-block';
-              matchWrapper.className = 'knowyourvc-investor-wrapper'
-              var match = document.createElement(hiliteTag);
-              match.appendChild(document.createTextNode(regs[0]));
-              match.className = "knowyourvc-investor"
-              match.style.backgroundColor = wordColor[regs[0].toLowerCase()];
-              match.style.fontStyle = "inherit";
-              match.style.color = "#000";
-              matchWrapper.appendChild(match)
+
+              var wrapper = document.createElement('div');
+              var popup = document.createElement('div');
+            
+              var title = document.createElement('h2');
+              title.className = 'knowyourvc-investor-title';
+              title.innerHTML = 'Review from Know Your VC';
+          
+            
+              var text = document.createElement('p');
+              var investorId;
+
+              //GET request here
+              $.get('https://31a57977.ngrok.io/api/investors/search', { name: firstName + ' ' + lastName }, function(res) {
+                // $.get('https://knapi.herokuapp.com/api/investors/search/', { name: firstName + ' ' + lastName }, function(res) {
+                text.className = "knowyourvc-investor-text";
+                popup.className = "knowyourvc-investor-popup";
+                popup.style.display = "none";
+              
+                if (!res.investorId) {
+                  return;
+                }
+
+                if (res.review) {
+                  text.innerHTML = res.review.comment + '\n';
+                } else {
+                  text.innerHTML = 'No reviews - click here to be the first to review!'
+                }
+
+                // create match wrapper
+                var matchWrapper = document.createElement('div')
+                matchWrapper.style.display = 'inline-block';
+                matchWrapper.className = 'knowyourvc-investor-wrapper'
+
+                var match = document.createElement(hiliteTag);
+                match.appendChild(document.createTextNode(regs[0]));
+                match.className = "knowyourvc-investor"
+                match.style.backgroundColor = wordColor[regs[0].toLowerCase()];
+                match.style.fontStyle = "inherit";
+                match.style.color = "#000";
+
+                popup.append(title);
+                popup.appendChild(text);
+
+                matchWrapper.appendChild(match);
+                matchWrapper.appendChild(popup);
+                var after = node.splitText(regs.index);
+                after.nodeValue = after.nodeValue.substring(regs[0].length);
+                node.parentNode.insertBefore(matchWrapper, after);
+
+                popup.onclick = function() {
+                  if (res.investorId) {
+                    window.open("http://knowyourvc.com/investors/" + res.investorId);
+                  }
+                }
+                popup.style.display = "none";
+          
+                $(matchWrapper).hover(function() {
+                  popup.style.display = "inherit"
+                }, function() {
+                  popup.style.display = "none";
+                })
+              })
+
+              
       
-              var after = node.splitText(regs.index);
-              after.nodeValue = after.nodeValue.substring(regs[0].length);
-              node.parentNode.insertBefore(matchWrapper, after);
+
             }
           }
         })
@@ -142,55 +195,9 @@ var myHilitor;
 
 var callback = function() {
   // Handler when the DOM is fully loaded
+  console.log("i'm being loaded")
   myHilitor = new Hilitor();
   myHilitor.apply();
-
-  var investorEls = document.getElementsByClassName('knowyourvc-investor-wrapper');
-
-  $('.knowyourvc-investor-wrapper').each(function(i, el) {
-
-    var wrapper = document.createElement('div');
-    var popup = document.createElement('div');
-  
-    var title = document.createElement('h2');
-    title.className = 'knowyourvc-investor-title';
-    title.innerHTML = 'Review from Know Your VC';
-
-  
-    var text = document.createElement('p');
-    var investorId;
-    // $.get('https://31a57977.ngrok.io/api/investors/search', { name: encodeURI(investorName) }, function(res) {
-    $.get('https://knapi.herokuapp.com/api/investors/search/', { name: $(this).first().text() }, function(res) {
-      text.className = "knowyourvc-investor-text";
-      popup.className = "knowyourvc-investor-popup";
-      popup.style.display = "none";
-
-      if (res.review) {
-        text.innerHTML = res.review.comment + '\n';
-      } else {
-        text.innerHTML = 'No reviews - click here to be the first to review!'
-      }
-
-      popup.append(title);
-      popup.appendChild(text);
-      investorId = res.investorId;
-      el.append(popup);
-
-      popup.onclick = function() {
-        if (res.investorId) {
-          window.open("http://knowyourvc.com/investors/" + res.investorId);
-        }
-      }
-      popup.style.display = "none";
-
-      $(el).hover(function() {
-        popup.style.display = "inherit"
-      }, function() {
-        popup.style.display = "none";
-      })
-    })
-
-  })
 }
 
 if (
@@ -199,5 +206,5 @@ if (
 ) {
   callback();
 } else {
-  document.addEventListener("DOMContentLoaded", callback);
+  window.addEventListener("load", callback)
 }
