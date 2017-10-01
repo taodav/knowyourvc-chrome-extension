@@ -99,6 +99,8 @@ function Hilitor(id, tag)
 
               var wrapper = document.createElement('div');
               var popup = document.createElement('div');
+              var stars = document.createElement('div');
+              stars.className = "knowyourvc-investor-stars";
             
               var title = document.createElement('h2');
               title.className = 'knowyourvc-investor-title';
@@ -107,20 +109,34 @@ function Hilitor(id, tag)
             
               var text = document.createElement('p');
               var investorId;
-
+              
               //GET request here
               $.get('https://31a57977.ngrok.io/api/investors/search', { name: firstName + ' ' + lastName }, function(res) {
                 // $.get('https://knapi.herokuapp.com/api/investors/search/', { name: firstName + ' ' + lastName }, function(res) {
-                text.className = "knowyourvc-investor-text";
-                popup.className = "knowyourvc-investor-popup";
-                popup.style.display = "none";
-              
-                if (!res.investorId) {
+                  text.className = "knowyourvc-investor-text";
+                  popup.className = "knowyourvc-investor-popup";
+                  popup.style.display = "none";
+                  popup.append(title);
+                  
+                  if (!res.investorId) {
                   return;
                 }
 
                 if (res.review) {
                   text.innerHTML = res.review.comment + '\n';
+
+                  if (res.review.overall) {
+                    $(stars).append("<p class='knowyourvc-investor-star-title'>Review rating:</p>");
+                    for (var i = 0; i < res.review.overall; i++) {
+                      $(stars).append("<span class='knowyourvc-investor-star-filled'>★</span>")
+                    }
+
+                    for (var i = 0; i< (5 - res.review.overall); i++) {
+                      $(stars).append("<span class='knowyourvc-investor-star-empty'>★</span>")                      
+                    }
+                    popup.append(stars);
+                  }
+
                 } else {
                   text.innerHTML = 'No reviews - click here to be the first to review!'
                 }
@@ -137,7 +153,6 @@ function Hilitor(id, tag)
                 match.style.fontStyle = "inherit";
                 match.style.color = "#000";
 
-                popup.append(title);
                 popup.appendChild(text);
 
                 matchWrapper.appendChild(match);
