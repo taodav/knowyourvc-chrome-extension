@@ -1,53 +1,80 @@
 .knowyourvc-investor-popup {
+  all: initial;
   position: absolute;
   z-index: 1000000;
   background:white;
   padding: 1rem;
-  box-sizing: border-box;  
-  overflow: hidden;
-  text-overflow: hidden;
-  width: 200px;
-  height: 280px;
+  box-sizing: border-box;
+  display: flex;
+  max-width: 200px;
+  max-height: 280px;
+  flex-direction: column;
   box-shadow: 0px 7px 14px 0px rgba(198, 203, 228, 0.5);
-  margin-top: 1.1rem;
-  margin-left: -4rem;
   cursor: pointer;
-  text-align: left;
+  flex-direction: column;
 }
 
 .knowyourvc-investor-text{
+  all: initial;
   color: black;
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
   font-weight: normal;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
 }
 
 .knowyourvc-investor-title{
+  all: initial;
   color: black;
   font-weight: bold;
   font-family: 'Roboto', sans-serif;
   font-size: 16px;
   margin-bottom: 5px;
   width: 100%;
-  padding: 0 !important;
+  margin-bottom: 0.5rem; 
+  cursor: pointer;  
 }
 
 .knowyourvc-investor-wrapper{
   text-transform: none;
 }
 .knowyourvc-investor-star-title {
+  all: initial;
   font-size: 14px;
   color: black;
   font-family: 'Roboto', sans-serif;
-  font-weight: normal;  
-  margin: 0;
-  padding: 0;
+  font-weight: normal;
+  display: block;
+  margin-bottom: 0.5rem;
+  cursor: pointer;  
+}
+.knowyourvc-investor-stars{
+  all: initial;
+  margin-bottom: 0.5rem;
+  cursor: pointer;  
 }
 
 .knowyourvc-investor-star-filled{
+  all: initial;
   color: #ffd700;
+  cursor: pointer;  
 }
 
 .knowyourvc-investor-star-empty {
+  all: initial;
   color: #d3d3d3;
+  cursor: pointer;  
+}
+
+.knowyourvc-investor-see-more{
+  all: initial;
+  font-size: 14px;
+  font-style: italic;
+  font-weight: 300;
+  font-family: 'Roboto', sans-serif;  
 }

@@ -154,6 +154,7 @@ function Hilitor(id, tag)
                 match.style.color = "#000";
 
                 popup.appendChild(text);
+                $(popup).append("<p class='knowyourvc-investor-see-more'>Click here to see more reviews</p>");
 
                 matchWrapper.appendChild(match);
                 matchWrapper.appendChild(popup);
@@ -169,7 +170,7 @@ function Hilitor(id, tag)
                 popup.style.display = "none";
           
                 $(matchWrapper).hover(function() {
-                  popup.style.display = "inherit"
+                  popup.style.display = "flex"
                 }, function() {
                   popup.style.display = "none";
                 })
