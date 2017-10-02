@@ -85,7 +85,6 @@ function Hilitor(id, tag)
       var data = doc.topics().data();
       if (data.length > 0) {
         var self = this;
-        console.log(data)
         data.map(function(entity) {
           if (entity.hasOwnProperty('firstName')) {
             var firstName = entity.firstName.charAt(0).toUpperCase() + entity.firstName.slice(1);
