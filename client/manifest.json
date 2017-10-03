@@ -3,7 +3,7 @@
 
   "name": "Investor Intel",
   "description": "Look at investor reviews while browsing the web!",
-  "version": "1.0",
+  "version": "1.1",
 
   "browser_action": {
     "default_icon": "img/app/logo.png",
