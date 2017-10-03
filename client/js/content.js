@@ -82,7 +82,7 @@ function Hilitor(id, tag)
     }
     if(node.nodeType == 3) { // NODE_TEXT
       doc = nlp(node.nodeValue);
-      var data = doc.topics().data();
+      var data = doc.people().data();
       if (data.length > 0) {
         var self = this;
         data.map(function(entity) {
@@ -211,7 +211,6 @@ var myHilitor;
 
 var callback = function() {
   // Handler when the DOM is fully loaded
-  console.log("i'm being loaded")
   myHilitor = new Hilitor();
   myHilitor.apply();
 }

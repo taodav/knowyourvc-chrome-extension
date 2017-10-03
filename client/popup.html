@@ -1,17 +1,78 @@
 <!doctype html>
+<html>
 
-<html lang="en">
 <head>
-  <meta charset="utf-8">
+  <title>Magnify - Settings</title>
 
-  <meta name="description" content="Know Your VC">
-  <meta name="author" content="David Tao">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
 
+  <!-- Materialized Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+  <style>
+    body {
+      font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+      font-size: 100%;
+      min-width: 800px;
+    }
+
+    #status {
+      /* avoid an excessively wide status text */
+      white-space: pre;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    #title {
+      text-align: center;
+    }
+
+    #title>h4 {
+      display: inline-block;
+    }
+
+    #title>a {
+      float: right;
+    }
+
+    #image-navbar {
+      height: 16px;
+    }
+  </style>
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="jquery-2.1.1.min.js"></script>
+  <script src="materialize.min.js"></script>
+
+  <!--
+          - JavaScript and HTML must be in separate files: see our Content Security
+          - Policy documentation[1] for details and explanation.
+          -
+          - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
+         -->
+  <!-- <script src="chrome-api-interface.js"></script>
+  <script src="request-interface.js"></script> -->
 </head>
 
 <body>
-  <h1>
-    Know Your VC Chrome Extension
-  </h1>
+  <div class="container">
+    <h5>Know Your VC Chrome Extension</h5>
+    <p> This page is using the Know Your VC Extension</p>
+    <!-- <form action="#">
+    <p>
+      <input type="checkbox" id="test5" />
+      <label for="test5">New York Times</label>
+    </p>
+    <p>
+      <input type="checkbox" id="test6" />
+      <label for="test6">The Guardian</label>
+    </p> -->
+  </form>
+  </div>
+
+
 </body>
+
 </html>

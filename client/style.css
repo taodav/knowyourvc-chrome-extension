@@ -3,7 +3,7 @@
   position: absolute;
   z-index: 1000000;
   background:white;
-  padding: 1rem;
+  padding: 1.5rem;
   box-sizing: border-box;
   display: flex;
   max-width: 200px;
