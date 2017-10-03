@@ -11,6 +11,7 @@
     "default_title": "Know Your VC"
   },
   "content_scripts": [{
+    "exclude_matches": ["*://knowyourvc.com/*"],
     "matches": [
       "<all_urls>"
     ],
