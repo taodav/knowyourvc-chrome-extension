@@ -211,15 +211,16 @@ var myHilitor;
 
 var callback = function() {
   // Handler when the DOM is fully loaded
+  
   myHilitor = new Hilitor();
   myHilitor.apply();
 }
-
-if (
+if (document.readyState === "interactive" ||
   document.readyState === "complete" ||
-  (document.readyState !== "loading" && !document.documentElement.doScroll)
+(document.readyState !== "loading" && !document.documentElement.doScroll)
 ) {
   callback();
 } else {
-  window.addEventListener("load", callback)
+  document.addEventListener("DOMContentLoaded", callback)
 }
+window.addEventListener('load', callback);
