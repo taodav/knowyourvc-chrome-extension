@@ -3,7 +3,7 @@
 
   "name": "Investor Intel",
   "description": "Look at investor reviews while browsing the web!",
-  "version": "1.2",
+  "version": "1.3",
 
   "browser_action": {
     "default_icon": "img/app/logo.png",
@@ -11,6 +11,7 @@
     "default_title": "Know Your VC"
   },
   "content_scripts": [{
+    "exclude_matches": ["*://knowyourvc.com/*"],
     "matches": [
       "<all_urls>"
     ],
