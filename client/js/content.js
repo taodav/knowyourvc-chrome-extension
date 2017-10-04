@@ -7,9 +7,7 @@ function Hilitor(id, tag)
   var targetNode = document.getElementById(id) || document.body;
   var hiliteTag = tag || "EM";
   var skipTags = new RegExp("^(?:" + hiliteTag + "|SCRIPT|FORM|SPAN)$");
-  var colors = ["#ff6", "#a0ffff", "#9f9", "#f99", "#f6f"];
-  var wordColor = [];
-  var colorIdx = 0;
+  var colors = ["#f45c42", "#f4a341", "#f4e541", "#dff441", "#bbf441"];
   var matchRegex = "";
   var nameMatches = [];
   var openLeft = false;
@@ -93,9 +91,6 @@ function Hilitor(id, tag)
             if(!matchRegex) return;
             var regs;
             if((nv = node.nodeValue) && (regs = matchRegex.exec(nv))) {
-              if(!wordColor[regs[0].toLowerCase()]) {
-                wordColor[regs[0].toLowerCase()] = colors[colorIdx++ % colors.length];
-              }
 
               var wrapper = document.createElement('div');
               var popup = document.createElement('div');
@@ -112,7 +107,7 @@ function Hilitor(id, tag)
               
               //GET request here
               // $.get('https://31a57977.ngrok.io/api/investors/search', { name: firstName + ' ' + lastName }, function(res) {
-                $.get('https://knapi.herokuapp.com/api/investors/search/', { name: firstName + ' ' + lastName }, function(res) {
+              $.get('https://knapi.herokuapp.com/api/investors/search/', { name: firstName + ' ' + lastName }, function(res) {
                   text.className = "knowyourvc-investor-text";
                   popup.className = "knowyourvc-investor-popup";
                   popup.style.display = "none";
@@ -122,10 +117,13 @@ function Hilitor(id, tag)
                   return;
                 }
 
+                var match = document.createElement(hiliteTag);
+                match.style.backgroundColor = "#a0ffff";
                 if (res.review) {
                   text.innerHTML = res.review.comment + '\n';
 
                   if (res.review.overall) {
+                    match.style.backgroundColor = colors[res.review.overall - 1];
                     $(stars).append("<p class='knowyourvc-investor-star-title'>Review rating:</p>");
                     for (var i = 0; i < res.review.overall; i++) {
                       $(stars).append("<span class='knowyourvc-investor-star-filled'>★</span>")
@@ -146,16 +144,13 @@ function Hilitor(id, tag)
                 matchWrapper.style.display = 'inline-block';
                 matchWrapper.className = 'knowyourvc-investor-wrapper'
 
-                var match = document.createElement(hiliteTag);
                 match.appendChild(document.createTextNode(regs[0]));
                 match.className = "knowyourvc-investor"
-                match.style.backgroundColor = wordColor[regs[0].toLowerCase()];
                 match.style.fontStyle = "inherit";
                 match.style.color = "#000";
 
                 popup.appendChild(text);
                 $(popup).append("<p class='knowyourvc-investor-see-more'>Click here to see more reviews</p>");
-
                 matchWrapper.appendChild(match);
                 matchWrapper.appendChild(popup);
                 var after = node.splitText(regs.index);
@@ -211,7 +206,7 @@ var myHilitor;
 
 var callback = function() {
   // Handler when the DOM is fully loaded
-  
+
   myHilitor = new Hilitor();
   myHilitor.apply();
 }
@@ -221,6 +216,7 @@ if (document.readyState === "interactive" ||
 ) {
   callback();
 } else {
-  document.addEventListener("DOMContentLoaded", callback)
+  // window.addEventListener("DOMContentLoaded", callback)
+  $(document).ready(callback)
+  // document.addEventListener("DOMContentLoaded", callback);
 }
-window.addEventListener('load', callback);

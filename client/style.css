@@ -64,6 +64,10 @@
   color: #ffd700;
   cursor: pointer;  
 }
+  var colors = [];
+.hello{
+  color: #ff6, #a0ffff, #9f9, #f99, #f6f
+}
 
 .knowyourvc-investor-star-empty {
   all: initial;
