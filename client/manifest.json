@@ -3,7 +3,7 @@
 
   "name": "Investor Intel",
   "description": "Look at investor reviews while browsing the web!",
-  "version": "1.3",
+  "version": "1.4",
 
   "browser_action": {
     "default_icon": "img/app/logo.png",
@@ -24,10 +24,18 @@
     ],
     "run_at": "document_start"
   }],
+
+  "background": {
+    "scripts": [
+      "js/background.js"
+    ],
+    "persistent": false
+  },
   "permissions": [
     "<all_urls>",
     "activeTab",
     "storage",
-    "http://*/"
+    "http://*/",
+    "http://ec2-18-216-2-35.us-east-2.compute.amazonaws.com/*"
   ]
 }

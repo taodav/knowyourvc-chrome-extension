@@ -106,15 +106,24 @@ function Hilitor(id, tag)
               var investorId;
               
               //GET request here
-              // $.get('https://31a57977.ngrok.io/api/investors/search', { name: firstName + ' ' + lastName }, function(res) {
-              $.get('https://knapi.herokuapp.com/api/investors/search/', { name: firstName + ' ' + lastName }, function(res) {
-                  text.className = "knowyourvc-investor-text";
-                  popup.className = "knowyourvc-investor-popup";
-                  popup.style.display = "none";
-                  popup.append(title);
-                  
-                  if (!res.investorId) {
-                  return;
+              var url = 'http://ec2-18-216-2-35.us-east-2.compute.amazonaws.com/api/investors/search?name=' + encodeURI(firstName + " " + lastName);
+              chrome.runtime.sendMessage({
+                method: 'GET',
+                action: 'xhttp',
+                url: url,
+              }, function (res) {
+                res = JSON.parse(res);
+                /*Callback function to deal with the response*/
+              // });
+
+              // $.get('http://ec2-18-216-2-35.us-east-2.compute.amazonaws.com/api/investors/search', { name: firstName + ' ' + lastName }, function(res) {
+                text.className = "knowyourvc-investor-text";
+                popup.className = "knowyourvc-investor-popup";
+                popup.style.display = "none";
+                popup.append(title);
+                
+                if (!res.investorId) {
+                return;
                 }
 
                 var match = document.createElement(hiliteTag);
